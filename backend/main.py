@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
 from external_api import random_fact, number_fact, date_fact
-from llm import ask_llm 
+from llm import ask_llm, translate
 from memory import load_memory, save_memory, apply_updates
 import json
 
@@ -20,6 +20,7 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     message: str
+    lang: str
 
 
 @app.post("/chat")
@@ -44,6 +45,9 @@ def chat(req: ChatRequest):
         elif tool == "random_fact":
             result = random_fact()
 
+        if req.lang.startswith("ar"):
+            result = translate(result)
+
         return {"response": result}
 
     reply = data["reply"]
@@ -53,3 +57,4 @@ def chat(req: ChatRequest):
     save_memory(memory)
 
     return {"response": reply}
+

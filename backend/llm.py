@@ -1,4 +1,4 @@
-from google import genai
+from sambanova import SambaNova
 from dotenv import load_dotenv
 from memory import load_memory, save_memory, apply_updates
 import json
@@ -7,7 +7,8 @@ import os
 load_dotenv()
 
 
-client = genai.Client()
+client = SambaNova(api_key=os.getenv('SAMBANOVA_API_KEY'),
+                   base_url = 'https://api.sambanova.ai/v1')
 
 sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
 
@@ -26,6 +27,7 @@ sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
                 "reply": "what you say to the user",
                 "memory_updates": {
                     // only include fields that should be stored or updated
+                    // store them in english only
                 }
                 }
 
@@ -46,6 +48,7 @@ sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
                 ---
 
                 ## Rules:
+                - Always respond in the same language as the user.
                 - If a tool is needed, do NOT include "reply"
                 - If no tool is needed, do NOT include "tool"
                 - Only include memory_updates when new or changed information is found.
@@ -55,7 +58,6 @@ sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
                 - If user asks about stored info, use memory context implicitly.
                 - If user gives multiple updates, capture all of them.
                 - If the user request is ambiguous, ask a clarifying question in reply.
-                - Always respond in the same language as the user.
                 ---
 
                 ## Examples:
@@ -95,11 +97,26 @@ def ask_llm(user_input,memory):
                 User message:
                 {user_input}
                 """
-    response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
-        contents=[
-            sys_prompt,
-            prompt
+    response = client.chat.completions.create(
+        model="Meta-Llama-3.3-70B-Instruct",
+        messages=[
+            {'role':'system', 'content' :sys_prompt},
+            {'role' : 'user', 'content' : prompt}
         ]
     )
-    return response.text
+    return response.choices[0].message.content
+
+def translate(text):
+    prompt = f"""
+Translate this into arabic. Keep it natural.
+
+Text:
+{text}
+"""
+
+    response = client.chat.completions.create(
+        model="Meta-Llama-3.3-70B-Instruct",
+        messages=[{'role':'system', 'content' :prompt},]
+    )
+
+    return response.choices[0].message.content.strip()

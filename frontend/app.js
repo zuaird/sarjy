@@ -21,7 +21,7 @@ async function sendMessage(textOverride = null) {
     const res = await fetch(API_URL, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message: text, lang:currentLang })
     });
 
     const data = await res.json();
@@ -30,47 +30,51 @@ async function sendMessage(textOverride = null) {
     speak(data.response);
 }
 
-function detectLanguage(text) {
-    const arabicRegex = /[\u0600-\u06FF]/;
-
-    if (arabicRegex.test(text)) {
-        return "ar-SA";
-    }
-
-    return "en-US";
-}
-
 // ---------------- VOICE INPUT ----------------
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-recognition.lang = "en-US";
+let currentLang = "en-US";
+
+function setLanguage(lang) {
+    currentLang = lang;
+    recognition.lang = lang;
+
+    document.querySelectorAll("#lang-switch button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    event.target.classList.add("active");
+}
 
 recognition.onresult = (event) => {
     const text = event.results[0][0].transcript;
-
-    const detectedLang = detectLanguage(text);
-    currentLang = detectedLang;
-    recognition.lang = detectedLang;
-
     sendMessage(text);
 };
 
 function startVoice() {
+    recognition.lang = currentLang;
     recognition.start();
 }
 
 // ---------------- VOICE OUTPUT ----------------
 function speak(text) {
+    speechSynthesis.cancel();
+
     const utterance = new SpeechSynthesisUtterance(text);
+
     const voices = speechSynthesis.getVoices();
 
-    let voice = voices.find(v => v.lang === currentLang);
-
-    if (!voice) {
-        voice = voices.find(v => v.name.includes("Google")) || voices[0];
-    }
+    let voice =
+        voices.find(v =>
+            v.lang.startsWith(currentLang.split("-")[0]) &&
+            (v.name.includes("Google") || v.name.includes("Microsoft"))
+        ) ||
+        voices.find(v => v.lang.startsWith(currentLang.split("-")[0])) ||
+        voices[0];
 
     utterance.voice = voice;
     utterance.lang = currentLang;
+    utterance.rate = 1;
+    utterance.pitch = 1.05;
 
     speechSynthesis.speak(utterance);
 }

@@ -30,3 +30,15 @@ input {
   flex: 1;
   padding: 8px;
 }
+
+#lang-switch button {
+    padding: 8px 16px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+}
+
+#lang-switch .active {
+    background: #4f46e5;
+    color: white;
+}
