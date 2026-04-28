@@ -6,18 +6,37 @@ Sarjy is a voice-controlled AI assistant that acts as a lightweight personal age
 
 The system is designed as a simple but extensible AI agent built for real-world deployment constraints.
 
+For the best experience use chrome on PC
+
 ---
+
+## 🔗 Live Demo
+
+Frontend: [https://your-vercel-link](https://sarjy-9gm1.vercel.app/)  
+Backend: [https://your-render-link](https://sarjy.onrender.com) 
+GitHub: [https://github.com/your-repo](https://github.com/zuaird/sarjy)
+
+## 🏃 How to run locally
+
+Backend:
+- install dependencies
+- run FastAPI server
+
+Frontend:
+- open index.html or serve static files
+- configure API endpoint
 
 ## ⚙️ Tech Stack
 
 - Frontend: HTML, CSS, JavaScript
 - Backend: FastAPI
-- LLM: Sambanova
+- LLM: SambaNova
 - Memory: JSON-based persistence
 - Deployment: Render (backend), Vercel (frontend)
 - External API: Numbers API
 
 ---
+
 
 ## 🧠 Key Features
 
@@ -154,8 +173,6 @@ Static web app handling UI, voice input, and API communication.
 
 ### Multimodal
 - Image input support
-- Avatar-based assistant interface
-
   
-- Voice-first interface
-- External tool integration
+### Better UI
+- Avatar-based assistant interface
