@@ -12,9 +12,9 @@ For the best experience use chrome on PC
 
 ## 🔗 Live Demo
 
-Frontend: [https://your-vercel-link](https://sarjy-9gm1.vercel.app/)  
-Backend: [https://your-render-link](https://sarjy.onrender.com) 
-GitHub: [https://github.com/your-repo](https://github.com/zuaird/sarjy)
+Frontend: https://sarjy-9gm1.vercel.app/
+Backend: https://sarjy.onrender.com/chat
+GitHub: https://github.com/zuaird/sarjy
 
 ## 🏃 How to run locally
 
