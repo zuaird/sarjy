@@ -12,10 +12,10 @@ The system is designed as a simple but extensible AI agent built for real-world 
 
 - Frontend: HTML, CSS, JavaScript
 - Backend: FastAPI
-- LLM: Gemini / Sambanova (configurable)
+- LLM: Sambanova
 - Memory: JSON-based persistence
 - Deployment: Render (backend), Vercel (frontend)
-- APIs: External fact and utility services
+- External API: Numbers API
 
 ---
 
