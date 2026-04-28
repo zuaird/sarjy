@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000/chat";
+const API_URL = "https://sarjy.onrender.com/chat";
 
 // ---------------- UI ----------------
 function addMessage(text, sender) {
