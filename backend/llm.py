@@ -27,7 +27,7 @@ sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
                 "reply": "what you say to the user",
                 "memory_updates": {
                     // only include fields that should be stored or updated
-                    // store them in english only
+                    // ALWAYS store fields in english only
                 }
                 }
 
@@ -37,6 +37,8 @@ sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
                 "value": "optional number or empty string"
                 }
 
+                3)If user wants personality test, start a multi-step flow.
+                Ask one question at a time and store answers.
 
                 ---
 

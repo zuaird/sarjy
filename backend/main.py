@@ -49,6 +49,7 @@ def chat(req: ChatRequest):
             result = translate(result)
 
         return {"response": result}
+    
 
     reply = data["reply"]
     updates = data.get("memory_updates", {})

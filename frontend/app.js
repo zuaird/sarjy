@@ -34,15 +34,25 @@ async function sendMessage(textOverride = null) {
 const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
 let currentLang = "en-US";
 
-function setLanguage(lang) {
+document.body.addEventListener("click", () => {
+    speechSynthesis.getVoices();
+}, { once: true });
+
+window.onload = () => {
+    setLanguage("en-US", document.querySelector("#lang-switch button"));
+};
+
+function setLanguage(lang, btn = null) {
     currentLang = lang;
     recognition.lang = lang;
 
-    document.querySelectorAll("#lang-switch button").forEach(btn => {
-        btn.classList.remove("active");
+    document.querySelectorAll("#lang-switch button").forEach(b => {
+        b.classList.remove("active");
     });
 
-    event.target.classList.add("active");
+    if (btn) {
+        btn.classList.add("active");
+    }
 }
 
 recognition.onresult = (event) => {
