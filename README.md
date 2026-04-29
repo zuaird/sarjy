@@ -16,6 +16,14 @@ For the best experience use chrome on PC
 - Backend: https://sarjy.onrender.com/chat
 - GitHub: https://github.com/zuaird/sarjy
 
+## Examples
+<table>
+  <tr>
+    <td><img src="https://github.com/zuaird/sarjy/blob/main/images/image.png" width="300"/></td>
+    <td><img src="https://github.com/zuaird/sarjy/blob/main/images/image2.png" width="300"/></td>
+  </tr>
+</table>
+
 ## 🏃 How to run locally
 
 Backend:
