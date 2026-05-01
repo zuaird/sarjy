@@ -169,8 +169,7 @@ Static web app handling UI, voice input, and API communication.
 - Improved context retention
 
 ### Voice
-- Server-side text-to-speech
-- Interrupt handling (barge-in support)
+- Server-side speech-to-text
 
 ### Integrations
 - Google Calendar
