@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from external_api import random_fact, number_fact, date_fact
 from llm import ask_llm, translate
 from memory import load_memory, save_memory, apply_updates
-from eleven import tts_eleven
+from azure import tts_azure
 import json
 
 app = FastAPI()
@@ -62,5 +62,5 @@ def chat(req: ChatRequest):
 
 @app.post("/tts")
 def tts(req: ChatRequest):
-    audio = tts_eleven(req.message)
-    return Response(content=audio, media_type="audio/mpeg")
+    audio = tts_azure(req.message, req.lang)
+    return Response(content=audio, media_type="audio/wav")
