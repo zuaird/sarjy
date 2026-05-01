@@ -1,4 +1,3 @@
-import requests
 from fastapi import Response
 import os
 from dotenv import load_dotenv
