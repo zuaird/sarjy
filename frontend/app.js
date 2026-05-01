@@ -1,5 +1,5 @@
-const API_URL = "https://sarjy.onrender.com/chat";
-
+const API_URL = "https://sarjy.onrender.com";
+//const API_URL = "http://127.0.0.1:8000"
 // ---------------- UI ----------------
 function addMessage(text, sender) {
     const div = document.createElement("div");
@@ -18,7 +18,7 @@ async function sendMessage(textOverride = null) {
     addMessage(text, "user");
     input.value = "";
 
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_URL + '/chat', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ message: text, lang:currentLang })
@@ -66,25 +66,14 @@ function startVoice() {
 }
 
 // ---------------- VOICE OUTPUT ----------------
-function speak(text) {
-    speechSynthesis.cancel();
+async function speak(text) {
+    const res = await fetch(API_URL + "/tts", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message: text, lang:currentLang })
+    });
 
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    const voices = speechSynthesis.getVoices();
-
-    let voice =
-        voices.find(v =>
-            v.lang.startsWith(currentLang.split("-")[0]) &&
-            (v.name.includes("Google") || v.name.includes("Microsoft"))
-        ) ||
-        voices.find(v => v.lang.startsWith(currentLang.split("-")[0])) ||
-        voices[0];
-
-    utterance.voice = voice;
-    utterance.lang = currentLang;
-    utterance.rate = 1;
-    utterance.pitch = 1.05;
-
-    speechSynthesis.speak(utterance);
+    const blob = await res.blob();
+    const audio = new Audio(URL.createObjectURL(blob));
+    audio.play();
 }
