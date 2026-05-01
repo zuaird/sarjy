@@ -90,8 +90,17 @@ sys_prompt = """You are Sarjy, a helpful voice-controlled personal assistant.
                 "memory_updates": {}
                 }"""
 
+conversation_history = []
+MAX_HISTORY = 5
 
 def ask_llm(user_input,memory):
+    global conversation_history
+
+    conversation_history.append({"role": "user", "content": user_input})
+
+    # keep only last 5
+    conversation_history = conversation_history[-MAX_HISTORY:]
+
     prompt = f"""
                 User memory:
                 {memory}
@@ -99,11 +108,15 @@ def ask_llm(user_input,memory):
                 User message:
                 {user_input}
                 """
+    
     response = client.chat.completions.create(
         model="Meta-Llama-3.3-70B-Instruct",
         messages=[
-            {'role':'system', 'content' :sys_prompt},
-            {'role' : 'user', 'content' : prompt}
+            {"role": "system", "content": sys_prompt},
+
+            *conversation_history,
+
+            {"role": "user", "content": prompt}
         ]
     )
     return response.choices[0].message.content

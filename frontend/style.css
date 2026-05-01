@@ -24,9 +24,10 @@ body {
   margin: 8px 0;
 }
 
-.user {
+.user, .sarjy {
   font-weight: bold;
 }
+
 button {
   padding: 12px 14px;
   font-size: 16px;
@@ -64,3 +65,31 @@ input {
     color: white;
     transform: scale(1.05);
 }
+
+@keyframes pulse {
+  0% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.6; transform: scale(1); }
+}
+
+.sarjy-msg.speaking {
+  position: relative;
+  border-left: 3px solid #4f46e5;
+  padding-left: 8px;
+}
+
+.sarjy-msg.speaking::after {
+  content: " ● ● ●";
+  font-size: 10px;
+  margin-left: 8px;
+  color: #a5b4fc;
+  animation: wave 1s infinite;
+}
+
+/* wave effect */
+@keyframes wave {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
