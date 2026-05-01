@@ -12,8 +12,7 @@ For the best experience use chrome on PC
 
 ## 🔗 Live Demo
 
-- Frontend: https://sarjy-9gm1.vercel.app/
-- Backend: https://sarjy.onrender.com/chat
+- Demo: https://sarjy-9gm1.vercel.app/
 - GitHub: https://github.com/zuaird/sarjy
 
 ## Examples
